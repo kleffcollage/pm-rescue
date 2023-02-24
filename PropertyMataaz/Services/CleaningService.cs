@@ -108,7 +108,7 @@ namespace PropertyMataaz.Services
         {
             try
             {
-                var requests = _cleaningRepository.ListCleaning().Where(c => c.Id == (int)Statuses.ACTIVE).FirstOrDefault();
+                var requests = _cleaningRepository.ListCleaning().Where(c => c.Id == Id).FirstOrDefault();
                 return StandardResponse<CleaningView>.Ok(_mapper.Map<CleaningView>(requests));
 
             }
