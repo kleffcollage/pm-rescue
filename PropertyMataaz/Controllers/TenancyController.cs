@@ -26,7 +26,7 @@ namespace PropertyMataaz.Controllers
             return Ok(_tenancyService.ListMyTenancies());
         }
 
-        
+
 
         [HttpGet("landlord", Name = nameof(ListMyTenants))]
         [ProducesResponseType(200)]
@@ -46,6 +46,12 @@ namespace PropertyMataaz.Controllers
         public ActionResult<StandardResponse<TenancyView>> ToggleRenewability(int id)
         {
             return Ok(_tenancyService.ToggleRenewability(id));
+        }
+
+        [HttpPost("agreement/update/{id}", Name = nameof(UpdateTenancyAgreement))]
+        public ActionResult<StandardResponse<bool>> UpdateTenancyAgreement(int id)
+        {
+            return Ok(_tenancyService.UpdateTenancyAgreement(id));
         }
     }
 }

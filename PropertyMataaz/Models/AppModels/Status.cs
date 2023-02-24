@@ -20,5 +20,6 @@ namespace PropertyMataaz.Models.AppModels
         COMPLETED,
         ACCEPTED,
         REVIEWED,
+        TERMINATED
     }
 }

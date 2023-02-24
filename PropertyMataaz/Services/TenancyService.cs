@@ -103,8 +103,8 @@ namespace PropertyMataaz.Services
         public StandardResponse<string> GetAgreement(int TenancyId)
         {
             var thisMedia = _mediaRepository.GetTenancyAgreement(TenancyId);
-            if(thisMedia != null)
-                 return StandardResponse<string>.Ok(thisMedia.Url);
+            if (thisMedia != null)
+                return StandardResponse<string>.Ok(thisMedia.Url);
 
             return StandardResponse<string>.Error("There was an issue getting this agreement");
         }
@@ -122,6 +122,25 @@ namespace PropertyMataaz.Services
             {
                 Logger.Error(ex);
                 return StandardResponse<TenancyView>.Failed();
+            }
+        }
+
+        public StandardResponse<bool> UpdateTenancyAgreement(int id)
+        {
+            try
+            {
+                var thisTenancy = _tenancyRepository.ListTenancy().Where(t => t.Id == id).FirstOrDefault();
+                if (thisTenancy == null)
+                    return StandardResponse<bool>.Error("Tenancy not found");
+
+                thisTenancy.Agreed = true;
+                _tenancyRepository.Update(thisTenancy);
+                return StandardResponse<bool>.Ok(true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return StandardResponse<bool>.Error(StandardResponseMessages.ERROR_OCCURRED);
             }
         }
     }

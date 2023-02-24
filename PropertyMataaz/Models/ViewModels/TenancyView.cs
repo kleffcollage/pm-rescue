@@ -13,5 +13,6 @@ namespace PropertyMataaz.Models.ViewModels
         public DateTime RentDueDate { get; set; }
         public string Status { get; set; }
         public bool Renewable { get; set; }
+        public bool Agreed { get; set; }
     }
 }

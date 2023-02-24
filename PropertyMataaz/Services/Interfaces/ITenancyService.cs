@@ -12,5 +12,6 @@ namespace PropertyMataaz.Services.Interfaces
         StandardResponse<PagedCollection<TenancyView>> ListAllTenancies(PagingOptions pagingOptions);
         StandardResponse<string> GetAgreement(int TenancyId);
         StandardResponse<TenancyView> ToggleRenewability(int id);
+        StandardResponse<bool> UpdateTenancyAgreement(int id);
     }
 }

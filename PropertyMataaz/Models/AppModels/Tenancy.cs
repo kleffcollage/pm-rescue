@@ -16,5 +16,6 @@ namespace PropertyMataaz.Models.AppModels
         public DateTime RentDueDate { get; set; }
         public int StatusId { get; set; }
         public Status Status { get; set; }
+        public bool Agreed { get; set; }
     }
 }
