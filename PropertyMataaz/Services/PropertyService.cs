@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PropertyMataaz.Controllers;
 using PropertyMataaz.Models;
 using PropertyMataaz.Models.AppModels;
@@ -855,7 +856,7 @@ namespace PropertyMataaz.Services
                 var loggedInUserId = _httpContextAccessor.HttpContext.User.GetLoggedInUserId<int>();
                 var thisUser = _userManager.FindByIdAsync(loggedInUserId.ToString()).Result;
                 var property = _propertyRepository.GetById(propertyId);
-                var transaction = _paymentRepository.QueryTransactions().Where(t => t.UserId == loggedInUserId && t.PropertyId == propertyId && t.StatusId == (int)Statuses.COMPLETED).FirstOrDefault();
+                var transaction = _paymentRepository.QueryTransactions().Include(x => x.PaymentLog).ThenInclude(x => x.Card).Where(t => t.UserId == loggedInUserId && t.PropertyId == propertyId && t.StatusId == (int)Statuses.COMPLETED).FirstOrDefault();
 
                 if (transaction == null)
                     return StandardResponse<ReceiptView>.Error("Mo transaction found");
