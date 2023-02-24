@@ -642,28 +642,13 @@ namespace PropertyMataaz.Services
                 ExistingProperty.Title = model.Title;
                 ExistingProperty.Name = model.Name;
                 ExistingProperty.StatusId = (int)Statuses.PENDING;
+                ExistingProperty.DocumentUrl = !string.IsNullOrEmpty(model.DocumentUrl) ? model.DocumentUrl : ExistingProperty.DocumentUrl;
 
 
                 var UpdateResult = _propertyRepository.Update(ExistingProperty);
                 if (UpdateResult == null)
                     return StandardResponse<PropertyView>.Error(StandardResponseMessages.ERROR_OCCURRED);
 
-                if (MappedProperty.MediaFiles.Count > 0)
-                {
-                    foreach (var media in MappedProperty.MediaFiles)
-                    {
-                        media.PropertyId = MappedProperty.Id;
-
-                        media.Name = _codeProvider.New(0, Constants.NEW_PROPERTY_MEDIA_NAME, 0, 10, Constants.PROPERTY_MATAAZ_MEDIA_PREFIX).CodeString;
-
-                        Media NewMedia = _mapper.Map<Media>(media);
-
-                        var Result = _mediaRepository.UploadMedia(NewMedia).Result;
-
-                        if (!Result.Succeeded)
-                            return StandardResponse<PropertyView>.Ok().AddStatusMessage(StandardResponseMessages.MEDIA_UPLOAD_FAILED);
-                    }
-                }
 
                 var MappedResponse = _mapper.Map<PropertyView>(UpdateResult);
                 return StandardResponse<PropertyView>.Ok().AddData(MappedResponse).AddStatusMessage(StandardResponseMessages.SUCCESSFUL);

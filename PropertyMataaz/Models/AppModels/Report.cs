@@ -7,5 +7,6 @@ namespace PropertyMataaz.Models.AppModels
         public User User { get; set; }
         public string Description { get; set; }
         public string Email {get; set; }
+        public Property Property { get; set; }
     }
 }

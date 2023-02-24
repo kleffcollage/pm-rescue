@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.Configuration;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using PropertyMataaz.Controllers;
 using PropertyMataaz.Models;
 using PropertyMataaz.Models.AppModels;
@@ -82,7 +83,7 @@ namespace PropertyMataaz.Services
             try
             {
                 var all = _reportRepository.Query().ToList();
-                var reports  = _reportRepository.Query().OrderByDescending(a => a.Id).ProjectTo<ReportView>(_mappingConfigurations).AsEnumerable();
+                var reports  = _reportRepository.Query().Include(x => x.Property).OrderByDescending(a => a.Id).ProjectTo<ReportView>(_mappingConfigurations).AsEnumerable();
                 var PagedResponse = reports.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
                 var response = PagedCollection<ReportView>.Create(Link.ToCollection(nameof(ReportController.GetReports)), PagedResponse.ToArray(), reports.Count(), pagingOptions);
                 return StandardResponse<PagedCollection<ReportView>>.Ok().AddData(response);
