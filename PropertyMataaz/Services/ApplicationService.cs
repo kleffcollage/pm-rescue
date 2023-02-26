@@ -444,10 +444,10 @@ namespace PropertyMataaz.Services
                 if (existingTransaction == null || existingTransaction.PaymentLog == null)
                     return StandardResponse<ApplicationStatusView>.Ok(new ApplicationStatusView() { HasApplied = true, HasPaid = false, ApplicationStatus = existingApplication.Status.Name });
 
-                if (existingTransaction.PaymentLog.Status != "success")
-                    return StandardResponse<ApplicationStatusView>.Ok(new ApplicationStatusView() { HasApplied = true, HasPaid = false, ApplicationStatus = existingTransaction.Status.Name });
+                if (existingTransaction.PaymentLog.Status != "successful")
+                    return StandardResponse<ApplicationStatusView>.Ok(new ApplicationStatusView() { HasApplied = true, HasPaid = false, ApplicationStatus = existingApplication.Status.Name  });
 
-                return StandardResponse<ApplicationStatusView>.Ok(new ApplicationStatusView() { HasApplied = true, HasPaid = true, ApplicationStatus = existingTransaction.Status.Name });
+                return StandardResponse<ApplicationStatusView>.Ok(new ApplicationStatusView() { HasApplied = true, HasPaid = true, ApplicationStatus = existingApplication.Status.Name  });
             }
             catch (Exception ex)
             {

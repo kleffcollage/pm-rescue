@@ -112,7 +112,7 @@ namespace PropertyMataaz.Repositories
         {
             try
             {
-                var transaction = _context.Transactions.Where(t => t.PropertyId == propertyId && t.UserId == userId).Include(t => t.PaymentLog).LastOrDefault();
+                var transaction = _context.Transactions.Where(t => t.PropertyId == propertyId && t.UserId == userId).Include(t => t.PaymentLog).OrderBy(t => t.Id).LastOrDefault();
                 return transaction;
             }
             catch (Exception ex)
