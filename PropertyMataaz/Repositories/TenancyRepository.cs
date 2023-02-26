@@ -18,7 +18,7 @@ namespace PropertyMataaz.Repositories
         {
             try
             {
-                return _context.Tenancies.Include(t => t.Owner).ThenInclude(t => t.PassportPhotograph).Include(t => t.Tenant).ThenInclude(t => t.PassportPhotograph).Include(t => t.Property).Include(t => t.Transaction).Include(t => t.Status);
+                return _context.Tenancies.Include(t => t.Owner).ThenInclude(t => t.PassportPhotograph).Include(t => t.Tenant).ThenInclude(t => t.PassportPhotograph).Include(t => t.Property).ThenInclude(t => t.MediaFiles).Include(t => t.Transaction).Include(t => t.Status);
             }
             catch (Exception ex)
             {
