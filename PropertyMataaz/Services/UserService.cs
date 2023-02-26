@@ -457,6 +457,7 @@ namespace PropertyMataaz.Services
             {
                 var Enquiry = _userEnquiryRepository.Query().Include(e => e.User)
                                                       .Include(e => e.Property)
+                                                      .ThenInclude(p => p.Status)
                                                       .Include(e => e.Property.MediaFiles)
                                                       .Include(e => e.Property.PropertyType).FirstOrDefault(x => x.Id == Id);
 
