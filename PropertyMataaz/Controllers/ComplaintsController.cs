@@ -53,7 +53,7 @@ namespace PropertyMataaz.Controllers
 
         [HttpGet("property/list/all", Name = nameof(ListAllComplaints))]
         [ProducesResponseType(200)]
-        public ActionResult<StandardResponse<PagedCollection<ComplaintsView>>> ListAllComplaints([FromQuery]PagingOptions options,int propertyId)
+        public ActionResult<StandardResponse<PagedCollection<ComplaintsView>>> ListAllComplaints([FromQuery]PagingOptions options)
         {
             options.Replace(_defaultPagingOptions);
             return Ok(_complaintsService.ListAllComplaints(options));
