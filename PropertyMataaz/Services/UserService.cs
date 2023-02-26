@@ -39,7 +39,8 @@ namespace PropertyMataaz.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserEnquiryRepository _userEnquiryRepository;
         private readonly IMediaRepository _mediaRepository;
-        public UserService(IMapper mapper, IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager, IEmailHandler emailHandler, ICodeProvider codeProvider, IOptions<Globals> globals, IUtilityMethods utilityMethods, IConfigurationProvider mappingConfigurations, IHttpContextAccessor httpContextAccessor, IUserEnquiryRepository userEnquiryRepository, RoleManager<Role> roleManager, IMediaRepository mediaRepository)
+        private readonly IPropertyRepository _propertyRepository;
+        public UserService(IMapper mapper, IUserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager, IEmailHandler emailHandler, ICodeProvider codeProvider, IOptions<Globals> globals, IUtilityMethods utilityMethods, IConfigurationProvider mappingConfigurations, IHttpContextAccessor httpContextAccessor, IUserEnquiryRepository userEnquiryRepository, RoleManager<Role> roleManager, IMediaRepository mediaRepository, IPropertyRepository propertyRepository)
         {
             _userRepository = userRepository;
             _userManager = userManager;
@@ -54,6 +55,7 @@ namespace PropertyMataaz.Services
             _userEnquiryRepository = userEnquiryRepository;
             _roleManager = roleManager;
             _mediaRepository = mediaRepository;
+            _propertyRepository = propertyRepository;
         }
         public StandardResponse<UserView> CreateUser(Register newUser)
         {
@@ -358,7 +360,7 @@ namespace PropertyMataaz.Services
 
         }
 
-        public StandardResponse<PagedCollection<UserView>> ListAldminUsers(PagingOptions pagingOptions, string search)
+        public StandardResponse<PagedCollection<UserView>> ListAllAAdminUsers(PagingOptions pagingOptions, string search)
         {
             var Users = _userRepository.ListUsers().Result.Users.Where(u => u.IsAdmin).
             ProjectTo<UserView>(_mappingConfigurations).AsEnumerable();
@@ -457,7 +459,10 @@ namespace PropertyMataaz.Services
                                                       .Include(e => e.Property)
                                                       .Include(e => e.Property.MediaFiles)
                                                       .Include(e => e.Property.PropertyType).FirstOrDefault(x => x.Id == Id);
+
+                var inspection = _mapper.Map<InspectionView>(_propertyRepository.ScheduledInspection(Enquiry.PropertyId, (int)Enquiry.UserId));
                 var mapped = _mapper.Map<UserEnquiryView>(Enquiry);
+                mapped.Inspection = inspection;
 
                 return StandardResponse<UserEnquiryView>.Ok().AddStatusMessage(StandardResponseMessages.SUCCESSFUL).AddData(mapped);
             }

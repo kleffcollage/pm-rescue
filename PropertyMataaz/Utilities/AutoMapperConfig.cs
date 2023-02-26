@@ -44,8 +44,7 @@ namespace PropertyMataaz.Utilities
             .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.Property.state))
             .ForMember(dest => dest.PropertyName, opt => opt.MapFrom(src => src.Property.Name))
             .ForMember(dest => dest.Lga, opt => opt.MapFrom(src => src.Property.LGA))
-            .ForMember(dest => dest.Area, opt => opt.MapFrom(src => src.Property.Area))
-            .ForMember(dest => dest.Inspection, opt => opt.MapFrom(src => src.Property.Inspections));
+            .ForMember(dest => dest.Area, opt => opt.MapFrom(src => src.Property.Area));
 
 
             CreateMap<Request, RequestView>();

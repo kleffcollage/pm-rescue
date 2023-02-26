@@ -53,5 +53,12 @@ namespace PropertyMataaz.Controllers
         {
             return Ok(_tenancyService.UpdateTenancyAgreement(id));
         }
+
+        [HttpGet("{id}", Name = nameof(GetTenancy))]  
+        [ProducesResponseType(200)]
+        public ActionResult<StandardResponse<TenancyView>> GetTenancy(int id)
+        {
+            return Ok(_tenancyService.GetTenancy(id));
+        }
     }
 }

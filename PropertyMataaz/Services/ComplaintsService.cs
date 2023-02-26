@@ -84,6 +84,23 @@ namespace PropertyMataaz.Services
             }
         }
 
+        public StandardResponse<PagedCollection<ComplaintsView>> ListAllComplaints(PagingOptions pagingOptions)
+        {
+            try
+            {
+                var allComplaints = _complaintsRepository.ListComplaints().AsQueryable().OrderByDescending(a => a.Id).ProjectTo<ComplaintsView>(_mappingConfigurations).AsQueryable();
+                var PagedResponse = allComplaints.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
+                var PagedCollection = PagedCollection<ComplaintsView>.Create(Link.ToCollection(nameof(ComplaintsController.ListComplaints)), PagedResponse.ToArray(), allComplaints.Count(), pagingOptions);
+                return StandardResponse<PagedCollection<ComplaintsView>>.Ok(PagedCollection);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return StandardResponse<PagedCollection<ComplaintsView>>.Failed();
+            }
+        }
+
         public StandardResponse<IEnumerable<ComplaintsView>> ListMyComplaints()
         {
             try

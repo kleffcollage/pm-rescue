@@ -51,6 +51,14 @@ namespace PropertyMataaz.Controllers
             return Ok(_complaintsService.ListComplaints(options,propertyId));
         }
 
+        [HttpGet("property/list/all", Name = nameof(ListAllComplaints))]
+        [ProducesResponseType(200)]
+        public ActionResult<StandardResponse<PagedCollection<ComplaintsView>>> ListAllComplaints([FromQuery]PagingOptions options,int propertyId)
+        {
+            options.Replace(_defaultPagingOptions);
+            return Ok(_complaintsService.ListAllComplaints(options));
+        }
+
         [HttpGet("authorize/{complaintsId}", Name = nameof(AuthorizeComplaints))]
         public ActionResult<StandardResponse<ComplaintsView>> AuthorizeComplaints(int complaintsId)
         {

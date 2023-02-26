@@ -84,6 +84,24 @@ namespace PropertyMataaz.Services
                 return StandardResponse<IEnumerable<TenancyView>>.Failed();
             }
         }
+
+        public StandardResponse<TenancyView> GetTenancy(int Id)
+        {
+            try
+            {
+                var tenancies = _tenancyRepository.ListTenancy().Where(t => t.Id == Id).FirstOrDefault();
+                var mapped = _mapper.Map<TenancyView>(tenancies);
+
+                return StandardResponse<TenancyView>.Ok(mapped);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return StandardResponse<TenancyView>.Failed();
+            }
+        }
+
+
         public StandardResponse<IEnumerable<TenancyView>> ListMyTenants()
         {
             try
@@ -100,6 +118,8 @@ namespace PropertyMataaz.Services
                 return StandardResponse<IEnumerable<TenancyView>>.Failed();
             }
         }
+
+
         public StandardResponse<string> GetAgreement(int TenancyId)
         {
             var thisMedia = _mediaRepository.GetTenancyAgreement(TenancyId);

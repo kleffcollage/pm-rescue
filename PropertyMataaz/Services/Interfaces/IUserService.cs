@@ -36,7 +36,7 @@ namespace PropertyMataaz.Services.Interfaces
         StandardResponse<PagedCollection<UserEnquiryView>> ListAllEnquiries(PagingOptions pagingOptions);
         StandardResponse<UserView> CreateAdminUser(Register newUser);
         public StandardResponse<UserView> AuthenticateAdmin(LoginModel userToLogin);
-        StandardResponse<PagedCollection<UserView>> ListAldminUsers(PagingOptions pagingOptions, string search);
+        StandardResponse<PagedCollection<UserView>> ListAllAAdminUsers(PagingOptions pagingOptions, string search);
         StandardResponse<MetricsView> Metrics();
         StandardResponse<UserView> UpdateUser(UpdateUserModel model);
         StandardResponse<UserView> RequestVerificationMail(string email);

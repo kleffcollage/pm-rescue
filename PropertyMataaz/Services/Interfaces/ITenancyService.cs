@@ -13,5 +13,6 @@ namespace PropertyMataaz.Services.Interfaces
         StandardResponse<string> GetAgreement(int TenancyId);
         StandardResponse<TenancyView> ToggleRenewability(int id);
         StandardResponse<bool> UpdateTenancyAgreement(int id);
+        StandardResponse<TenancyView> GetTenancy(int Id);
     }
 }

@@ -60,7 +60,7 @@ namespace PropertyMataaz.Controllers
         public ActionResult<StandardResponse<PagedCollection<UserView>>> ListAdmins([FromQuery] PagingOptions pagingOptions = null, [FromQuery] string search = null)
         {
             pagingOptions.Replace(_defaultPagingOptions);
-            return Ok(_userService.ListAldminUsers(pagingOptions, search));
+            return Ok(_userService.ListAllAAdminUsers(pagingOptions, search));
         }
 
         [HttpGet("user/{userId}", Name = nameof(GetUser))]
@@ -109,28 +109,28 @@ namespace PropertyMataaz.Controllers
         [HttpGet("properties/list", Name = nameof(ListProperties))]
         [ProducesResponseType(200)]
         [AllowAnonymous]
-        public ActionResult<StandardResponse<PropertyView>> ListProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search,[FromQuery] string filter)
+        public ActionResult<StandardResponse<PropertyView>> ListProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search, [FromQuery] string filter)
         {
             pagingOptions.Replace(_defaultPagingOptions);
-            return Ok(_propertyService.ListAllProperties(pagingOptions, search,filter));
+            return Ok(_propertyService.ListAllProperties(pagingOptions, search, filter));
         }
 
         [HttpGet("properties/rent/list", Name = nameof(ListRentProperties))]
         [ProducesResponseType(200)]
         [AllowAnonymous]
-        public ActionResult<StandardResponse<PropertyView>> ListRentProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search,[FromQuery] string filter)
+        public ActionResult<StandardResponse<PropertyView>> ListRentProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search, [FromQuery] string filter)
         {
             pagingOptions.Replace(_defaultPagingOptions);
-            return Ok(_propertyService.ListAllRentProperties(pagingOptions, search,filter));
+            return Ok(_propertyService.ListAllRentProperties(pagingOptions, search, filter));
         }
 
         [HttpGet("properties/sale/list", Name = nameof(ListSaleProperties))]
         [ProducesResponseType(200)]
         [AllowAnonymous]
-        public ActionResult<StandardResponse<PropertyView>> ListSaleProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search,[FromQuery] string filter)
+        public ActionResult<StandardResponse<PropertyView>> ListSaleProperties([FromQuery] PagingOptions pagingOptions, [FromQuery] string search, [FromQuery] string filter)
         {
             pagingOptions.Replace(_defaultPagingOptions);
-            return Ok(_propertyService.ListAllSaleProperties(pagingOptions, search,filter));
+            return Ok(_propertyService.ListAllSaleProperties(pagingOptions, search, filter));
         }
 
         [HttpGet("properties/list/rent/pending", Name = nameof(ListPropertiesForRentPending))]

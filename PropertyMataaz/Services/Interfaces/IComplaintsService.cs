@@ -12,5 +12,6 @@ namespace PropertyMataaz.Services.Interfaces
         StandardResponse<IEnumerable<ComplaintsView>> ListMyComplaints();
         StandardResponse<ComplaintsView> AuthorizeComplaints(int Id);
         StandardResponse<PagedCollection<ComplaintsView>> ListComplaints(PagingOptions pagingOptions, int propertyId);
+        StandardResponse<PagedCollection<ComplaintsView>> ListAllComplaints(PagingOptions pagingOptions);
     }
 }

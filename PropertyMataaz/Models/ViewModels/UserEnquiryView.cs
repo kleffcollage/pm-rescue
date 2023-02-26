@@ -15,6 +15,6 @@ namespace PropertyMataaz.Models.ViewModels
         public string Lga { get; set; }
         public string Area { get; set; }
         public DateTime DateCreated { get; set; }
-        public IEnumerable<InspectionView> Inspection { get; set; }
+        public InspectionView Inspection { get; set; }
     }
 }
