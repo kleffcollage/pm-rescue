@@ -433,6 +433,23 @@ namespace PropertyMataaz.Services
             }
         }
 
+        public StandardResponse<PagedCollection<UserEnquiry>> ListUserEnquiriesAdmin(PagingOptions pagingOptions, int UserId)
+        {
+            try
+            {
+                var userEnquiries = _userEnquiryRepository.ListUserActiveEnquiries(UserId).AsEnumerable();
+                var pagedEnquiries = userEnquiries.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
+
+                var PagedResponse = PagedCollection<UserEnquiry>.Create(Link.ToCollection(nameof(UserController.ListMyEnquiries)), pagedEnquiries.ToArray(), userEnquiries.Count(), pagingOptions);
+                return StandardResponse<PagedCollection<UserEnquiry>>.Ok().AddStatusMessage(StandardResponseMessages.SUCCESSFUL).AddData(PagedResponse);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return StandardResponse<PagedCollection<UserEnquiry>>.Error(StandardResponseMessages.ERROR_OCCURRED);
+            }
+        }
+
 
         public StandardResponse<PagedCollection<UserEnquiryView>> ListAllEnquiries(PagingOptions pagingOptions)
         {
@@ -463,7 +480,8 @@ namespace PropertyMataaz.Services
 
                 var inspection = _mapper.Map<InspectionView>(_propertyRepository.ScheduledInspection(Enquiry.PropertyId, (int)Enquiry.UserId));
                 var mapped = _mapper.Map<UserEnquiryView>(Enquiry);
-                mapped.Inspection = inspection;
+                mapped.Inspection.Add(inspection);
+               
 
                 return StandardResponse<UserEnquiryView>.Ok().AddStatusMessage(StandardResponseMessages.SUCCESSFUL).AddData(mapped);
             }

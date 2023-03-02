@@ -65,6 +65,7 @@ namespace PropertyMataaz.Services
             return StandardResponse<PagedCollection<RequestView>>.Ok().AddData(PagedResponse).AddStatusMessage(StandardResponseMessages.SUCCESSFUL);
         }
 
+
         public StandardResponse<PagedCollection<RequestView>> ListResolvedRequests(PagingOptions pagingOptions)
         {
             var Requests = _requestRepository.ListResolvedRequests()

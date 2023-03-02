@@ -18,6 +18,7 @@ namespace PropertyMataaz.Repositories
             var userEnquiries = _context.UserEnquiries.Where(e => e.UserId == UserId && e.Active)
                                                       .Include(e => e.User)
                                                       .Include(e => e.Property)
+                                                      .ThenInclude(P => P.Status)
                                                       .Include(e => e.Property.MediaFiles)
                                                       .Include(e => e.Property.PropertyType);
             return userEnquiries;
@@ -27,7 +28,8 @@ namespace PropertyMataaz.Repositories
         {
             var enquiries = _context.UserEnquiries.Where(e => e.Active)
                                                   .Include(e => e.User)
-                                                  .Include(e => e.Property);
+                                                  .Include(e => e.Property)
+                                                  .ThenInclude(P => P.Status);
             return enquiries;
         }
     }

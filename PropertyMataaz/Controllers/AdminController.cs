@@ -259,5 +259,21 @@ namespace PropertyMataaz.Controllers
             return Ok(_tenancyService.ListAllTenancies(pagingOptions));
         }
 
+        [HttpGet("enquiries/user/get/{id}", Name = nameof(ListUserEnquiries))]
+        [ProducesResponseType(200)]
+        public ActionResult<StandardResponse<PagedCollection<UserEnquiry>>> ListUserEnquiries( int id,[FromQuery] PagingOptions pagingOptions = null)
+        {
+            pagingOptions.Replace(_defaultPagingOptions);
+            return Ok(_userService.ListUserEnquiriesAdmin(pagingOptions, id));
+        }
+
+        [HttpGet("list/user/{id}", Name = nameof(ListUsersRequestsAdmin))]
+        [ProducesResponseType(200)]
+        public ActionResult<StandardResponse<PagedCollection<PropertyRequestView>>> ListUsersRequestsAdmin([FromQuery] PagingOptions pagingOptions, int id)
+        {
+            pagingOptions.Replace(_defaultPagingOptions);
+            return Ok(_propertyRequestService.GetUsersRequestsAdmin(pagingOptions, id));
+        }
+
     }
 }

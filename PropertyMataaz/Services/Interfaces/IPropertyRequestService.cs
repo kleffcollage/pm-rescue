@@ -15,5 +15,6 @@ namespace PropertyMataaz.Services.Interfaces
          StandardResponse<PropertyRequestView> RemoveMatch(int matchId);
          StandardResponse<PropertyRequestMatchView> AcceptMatch(int matchId);
          StandardResponse<PropertyRequestMatchView> RejectMatch(int matchId);
+         StandardResponse<PagedCollection<PropertyRequestView>> GetUsersRequestsAdmin(PagingOptions pagingOptions, int UserId);
     }
 }

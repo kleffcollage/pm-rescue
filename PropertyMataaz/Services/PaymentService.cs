@@ -214,7 +214,14 @@ namespace PropertyMataaz.Services
         {
             try
             {
-                var justTransactions = _paymentRepository.ListAllTransaction().ToArray();
+                search = search.ToLower();
+                var justTransactions = _paymentRepository.ListAllTransaction();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    justTransactions = justTransactions.Where(x => x.User.FirstName.ToLower().Contains(search) || x.User.FirstName.ToLower().Contains(search) || x.Property.Name.ToLower().Contains(search)).ToArray();
+
+                }
                 var transactions = _paymentRepository.ListAllTransaction().AsQueryable().OrderByDescending(a => a.Id).ProjectTo<TransactionView>(_mappingConfigurations).AsEnumerable();
 
                 var PagedResponse = justTransactions.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
@@ -230,7 +237,7 @@ namespace PropertyMataaz.Services
 
         public string GenerateTenancyAgreement(Transaction transaction, Property property, int TenancyId)
         {
-            
+
             List<KeyValuePair<string, string>> CustomValues = new List<KeyValuePair<string, string>>();
             CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_LANDLORD_NAME, $"{property.CreatedByUser.FirstName} {property.CreatedByUser.LastName}"));
             CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_ADDRESS, $"{property.Address}"));
@@ -265,7 +272,7 @@ namespace PropertyMataaz.Services
 
             return "";
         }
-   
-       
+
+
     }
 }

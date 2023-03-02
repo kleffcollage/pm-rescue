@@ -31,7 +31,8 @@ namespace PropertyMataaz.Filters
                 || asObjectResult?.Value == null
                 || asObjectResult?.Value.GetType() == typeof(PaymentView)
                 || asObjectResult?.Value.GetType() == typeof(StandardResponse<PagedCollection<TenancyView>>)
-                || asObjectResult?.Value.GetType() == typeof(StandardResponse<PaymentView>);
+                || asObjectResult?.Value.GetType() == typeof(StandardResponse<PaymentView>)
+                || asObjectResult?.Value.GetType() == typeof(StandardResponse<TenancyView>);
 
             if (shouldSkip)
             {

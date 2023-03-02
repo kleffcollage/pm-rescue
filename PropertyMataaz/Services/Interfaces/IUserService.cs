@@ -40,5 +40,6 @@ namespace PropertyMataaz.Services.Interfaces
         StandardResponse<MetricsView> Metrics();
         StandardResponse<UserView> UpdateUser(UpdateUserModel model);
         StandardResponse<UserView> RequestVerificationMail(string email);
+        StandardResponse<PagedCollection<UserEnquiry>> ListUserEnquiriesAdmin(PagingOptions pagingOptions, int UserId);
     }
 }

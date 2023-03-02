@@ -76,6 +76,28 @@ namespace PropertyMataaz.Services
             }
         }
 
+        public StandardResponse<PagedCollection<PropertyRequestView>> GetUsersRequestsAdmin(PagingOptions pagingOptions, int UserId)
+        {
+            try
+            {
+                var requests = _propertyRequestRepository.GetRequests().AsQueryable().OrderByDescending(a => a.Id)
+                                    .ProjectTo<PropertyRequestView>(_mappingConfigurations)
+                                    .AsEnumerable().Where(p => p.User.Id == UserId);
+
+                var PagedRequests = requests.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
+
+                var PagedResponse = PagedCollection<PropertyRequestView>.Create(Link.ToCollection(nameof(PropertyRequestController.ListUsersRequests)), PagedRequests.ToArray(), requests.Count(), pagingOptions);
+
+                return StandardResponse<PagedCollection<PropertyRequestView>>.Ok().AddStatusMessage(StandardResponseMessages.SUCCESSFUL).AddData(PagedResponse);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                return StandardResponse<PagedCollection<PropertyRequestView>>.Error(StandardResponseMessages.ERROR_OCCURRED);
+            }
+        }
+
         public StandardResponse<PropertyRequestView> RemoveMatch(int matchId)
         {
             try{
