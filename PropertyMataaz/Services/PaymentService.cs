@@ -214,11 +214,11 @@ namespace PropertyMataaz.Services
         {
             try
             {
-                search = search.ToLower();
                 var justTransactions = _paymentRepository.ListAllTransaction();
 
                 if (!string.IsNullOrEmpty(search))
                 {
+                    search = search.ToLower();
                     justTransactions = justTransactions.Where(x => x.User.FirstName.ToLower().Contains(search) || x.User.FirstName.ToLower().Contains(search) || x.Property.Name.ToLower().Contains(search)).ToArray();
 
                 }
