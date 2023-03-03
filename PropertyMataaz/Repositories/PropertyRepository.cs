@@ -291,9 +291,9 @@ namespace PropertyMataaz.Repositories
         {
             try
             {
-                var inspection = _context.Inspections.Where(p => p.PropertyId == PropertyId && p.UserId == UserId)
+                var inspection = _context.Inspections
                 .Include(p => p.InspectionDate)
-                .Include(p => p.InspectionTime).FirstOrDefault();
+                .Include(p => p.InspectionTime).FirstOrDefault(p => p.PropertyId == PropertyId && p.UserId == UserId);
                 return inspection;
             }
             catch (Exception ex)

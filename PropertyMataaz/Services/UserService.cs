@@ -480,8 +480,11 @@ namespace PropertyMataaz.Services
 
                 var inspection = _mapper.Map<InspectionView>(_propertyRepository.ScheduledInspection(Enquiry.PropertyId, (int)Enquiry.UserId));
                 var mapped = _mapper.Map<UserEnquiryView>(Enquiry);
-                mapped.Inspection.Add(inspection);
-               
+                if (inspection != null)
+                {
+                    mapped.SingleInspection = inspection;
+                }
+
 
                 return StandardResponse<UserEnquiryView>.Ok().AddStatusMessage(StandardResponseMessages.SUCCESSFUL).AddData(mapped);
             }

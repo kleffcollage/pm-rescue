@@ -238,18 +238,20 @@ namespace PropertyMataaz.Services
         public string GenerateTenancyAgreement(Transaction transaction, Property property, int TenancyId)
         {
 
-            List<KeyValuePair<string, string>> CustomValues = new List<KeyValuePair<string, string>>();
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_LANDLORD_NAME, $"{property.CreatedByUser.FirstName} {property.CreatedByUser.LastName}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_ADDRESS, $"{property.Address}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_NAME, $"{property.Name}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_NUMOFBEDROOMS, $"{property.NumberOfBedrooms}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_PRICEINFIGURES, $"{property.FormattedPrice}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_PRICEINWORDS, $"{Convert.ToInt32(property.Price).ToText(Nut.Language.English)} naira only"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_ADDRESS, $"{transaction.User.Address}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_NAME, $"{transaction.User.FirstName} {transaction.User.FirstName}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_NAME, $"{transaction.User.FirstName} {transaction.User.FirstName}"));
-            CustomValues.Add(new KeyValuePair<string, string>("today", $"{DateTime.Now.ToShortDateString()}"));
-            CustomValues.Add(new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_TYPE, $"{property.PropertyType.Name}"));
+            List<KeyValuePair<string, string>> CustomValues = new()
+            {
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_LANDLORD_NAME, $"{property.CreatedByUser.FirstName} {property.CreatedByUser.LastName}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_ADDRESS, $"{property.Address}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_NAME, $"{property.Name}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_NUMOFBEDROOMS, $"{property.NumberOfBedrooms}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_PRICEINFIGURES, $"{property.FormattedPrice}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_PRICEINWORDS, $"{Convert.ToInt32(property.Price).ToText(Nut.Language.English)} naira only"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_ADDRESS, $"{transaction.User.Address}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_NAME, $"{transaction.User.FirstName} {transaction.User.FirstName}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_TENANT_NAME, $"{transaction.User.FirstName} {transaction.User.FirstName}"),
+                new KeyValuePair<string, string>("today", $"{DateTime.Now.ToShortDateString()}"),
+                new KeyValuePair<string, string>(Constants.TENANCY_REPLACEMENT_PROPERTY_TYPE, $"{property.PropertyType.Name}")
+            };
 
             var pdfString = _pdfHandler.ComposeFromTemplate("TenancyAggreement.docx", CustomValues);
 

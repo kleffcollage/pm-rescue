@@ -125,8 +125,8 @@ namespace PropertyMataaz.Repositories
         public IEnumerable<Transaction> ListAllTransaction()
         {
             try{
-                var transactions = _context.Transactions.Include(t => t.PaymentLog).Include(t => t.Property).Include(t => t.RentRelief)
-                .Include(t => t.Status).Include(t => t.User);
+                var transactions = _context.Transactions.Include(t => t.Property).Include(t => t.RentRelief)
+                .Include(t => t.Status).Include(t => t.User).AsNoTracking();
                 return transactions;
             }
             catch (Exception ex)

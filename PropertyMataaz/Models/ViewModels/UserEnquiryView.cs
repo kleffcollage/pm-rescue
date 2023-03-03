@@ -16,5 +16,6 @@ namespace PropertyMataaz.Models.ViewModels
         public string Area { get; set; }
         public DateTime DateCreated { get; set; }
         public List<InspectionView> Inspection { get; set; }
+        public InspectionView SingleInspection { get; set; }
     }
 }
