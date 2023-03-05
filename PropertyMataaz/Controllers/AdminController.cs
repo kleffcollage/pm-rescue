@@ -195,10 +195,10 @@ namespace PropertyMataaz.Controllers
 
         [HttpGet("transactions/list", Name = nameof(ListTransactions))]
         [ProducesResponseType(200)]
-        public ActionResult<StandardResponse<PagedCollection<Transaction>>> ListTransactions([FromQuery] PagingOptions pagingOptions, [FromQuery] string search)
+        public ActionResult<StandardResponse<PagedCollection<Transaction>>> ListTransactions([FromQuery] PagingOptions pagingOptions, [FromQuery] string search, [FromQuery] TransactionFilterOptions filterOptions = null)
         {
             pagingOptions.Replace(_defaultPagingOptions);
-            return Ok(_paymentService.ListTransactions(pagingOptions, search));
+            return Ok(_paymentService.ListTransactions(pagingOptions, search,filterOptions));
         }
 
         [HttpGet("enquiries/list", Name = nameof(ListAllEnquiries))]

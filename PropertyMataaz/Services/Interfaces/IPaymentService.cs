@@ -11,7 +11,7 @@ namespace PropertyMataaz.Services.Interfaces
          StandardResponse<string> InitiatePayment(PaymentModel model);
          StandardResponse<PaymentView> ValidatePayment(string transactionReference, int transactionId);
          StandardResponse<PaymentRatesView> GetPaymentRates(int PropertyId);
-         StandardResponse<PagedCollection<Transaction>> ListTransactions(PagingOptions pagingOptions,string search);
+         StandardResponse<PagedCollection<Transaction>> ListTransactions(PagingOptions pagingOptions,string search, TransactionFilterOptions filterOptions = null);
          string GenerateTenancyAgreement(Transaction transaction, Property property,int TenancyId);
     }
 }

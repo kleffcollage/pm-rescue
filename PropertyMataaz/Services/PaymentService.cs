@@ -210,7 +210,7 @@ namespace PropertyMataaz.Services
             }
         }
 
-        public StandardResponse<PagedCollection<Transaction>> ListTransactions(PagingOptions pagingOptions, string search)
+        public StandardResponse<PagedCollection<Transaction>> ListTransactions(PagingOptions pagingOptions, string search, TransactionFilterOptions filterOptions = null)
         {
             try
             {
@@ -219,9 +219,35 @@ namespace PropertyMataaz.Services
                 if (!string.IsNullOrEmpty(search))
                 {
                     search = search.ToLower();
-                    justTransactions = justTransactions.Where(x => x.User.FirstName.ToLower().Contains(search) || x.User.FirstName.ToLower().Contains(search) || x.Property.Name.ToLower().Contains(search)).ToArray();
+                    justTransactions = justTransactions.Where(x => x.User.FirstName.ToLower().Contains(search) || x.User.FirstName.ToLower().Contains(search) || x.Property.Name.ToLower().Contains(search));
 
                 }
+
+                if (filterOptions != null)
+                {
+                    if (!string.IsNullOrEmpty(filterOptions.Status))
+                    {
+                        // get the enum value from the string
+                        int statusId = 0;
+                        foreach (int app in Enum.GetValues(typeof(Statuses)))
+                        {
+                            if(Enum.GetName(typeof(Statuses), app).ToLower() == filterOptions.Status.ToLower())
+                            {
+                                statusId = app;
+                                break;
+                            }   
+                        }
+                        justTransactions = justTransactions.Where(x => x.StatusId == statusId);
+                    }
+
+                    if(filterOptions.StartDate != null && filterOptions.EndDate != null)
+                    {
+                        justTransactions = justTransactions.Where(x => x.DateCreated >= filterOptions.StartDate && x.DateCreated <= filterOptions.EndDate);
+                    }
+                }
+
+
+
                 var transactions = _paymentRepository.ListAllTransaction().AsQueryable().OrderByDescending(a => a.Id).ProjectTo<TransactionView>(_mappingConfigurations).AsEnumerable();
 
                 var PagedResponse = justTransactions.Skip(pagingOptions.Offset.Value).Take(pagingOptions.Limit.Value);
